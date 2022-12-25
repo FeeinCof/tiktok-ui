@@ -1,0 +1,40 @@
+@import 'normalize.css';
+
+:root {
+  --tiktok-aqua: #00f2ea;
+  --tiktok-black: #161823;
+  --tiktok-pink: #ff0050;
+}
+
+[data-theme='dark'] {
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a {
+  margin: 0;
+  padding: 0;
+}
+
+button,
+input,
+[tabindex] {
+  border: none;
+  outline: none;
+}
