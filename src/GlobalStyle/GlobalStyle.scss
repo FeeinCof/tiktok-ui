@@ -1,0 +1,61 @@
+@import 'normalize.css';
+@font-face {
+  font-family: ProximaNova;
+  src: url('../assets/fonts/ProximaNova-Semibold.woff2');
+}
+
+:root {
+  --tiktok-aqua: #00f2ea;
+  --tiktok-black: #161823;
+  --tiktok-pink: #ff0050;
+  --header-height: 60px;
+}
+
+[data-theme='light'] {
+  --text-primary: #161823;
+  --bg-primary: white;
+}
+
+[data-theme='dark'] {
+  --text-primary: white;
+  --bg-primary: #121212;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: ProximaNova, Arial, Tahoma, PingFangSC, sans-serif;
+  margin: 0;
+  padding: 0;
+  letter-spacing: 0.5px;
+  line-height: 22px;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizespeed;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a {
+  margin: 0;
+  padding: 0;
+}
+
+button,
+input,
+[tabindex] {
+  font-family: 'ProximaNova', Arial, Tahoma, PingFangSC, sans-serif;
+  border: none;
+  outline: none;
+}

@@ -1,0 +1,115 @@
+[data-theme='light'] {
+  --search-bg: rgba(22, 24, 35, 0.06);
+  --search-text: rgb(22, 24, 35);
+  --bg-cancer-btn: rgba(22, 24, 35, 0.34);
+  --cancer-icon-src: url('../../assets/images/xmark@light.svg');
+  --glass-fill: rgba(22, 24, 35, 0.341);
+  --glass-fill-lighter: rgba(22, 24, 35, 0.75);
+}
+
+[data-theme='dark'] {
+  --search-bg: rgba(255, 255, 255, 0.12);
+  --search-text: rgba(255, 255, 255, 0.9);
+  --bg-cancer-btn: rgba(255, 255, 255, 0.34);
+  --cancer-icon-src: url('../../assets/images/xmark@dark.svg');
+  --glass-fill: rgba(255, 255, 255, 0.341);
+  --glass-fill-lighter: rgba(255, 255, 255, 0.75);
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  background-color: var(--bg-primary);
+}
+
+.inner {
+  width: 1150px;
+  height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 24px;
+  padding-left: 20px;
+}
+
+.search,
+.search-result {
+  width: 361px;
+}
+
+.search {
+  height: 46px;
+  display: flex;
+  align-items: center;
+  border-radius: 92px;
+  box-sizing: content-box;
+  background-color: var(--search-bg);
+  input[type='search'] {
+    writing-mode: horizontal-tb !important;
+    flex: 1;
+    padding-left: 16px;
+    font-size: 16px;
+    color: var(--search-text);
+    caret-color: rgb(254, 44, 85);
+    background-color: transparent;
+    &::-webkit-search-cancel-button {
+      cursor: pointer;
+      -webkit-appearance: none;
+      height: 14.67px;
+      width: 14.67px;
+      border-radius: 50%;
+      background-color: var(--bg-cancer-btn);
+      background-image: var(--cancer-icon-src);
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0 12px;
+    }
+    &:not(:placeholder-shown) ~ .search-btn > .glass-icon {
+      fill: var(--glass-fill-lighter);
+    }
+  }
+}
+
+.search-btn {
+  cursor: pointer;
+  position: relative;
+  width: 50px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-right-radius: 92px;
+  border-bottom-right-radius: 92px;
+  background-color: transparent;
+  &:hover {
+    background-color: var(--search-bg);
+  }
+  &:active {
+    background-color: rgba(22, 24, 35, 0.1);
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    width: 0.5px;
+    height: calc(46px * 55 / 100); // get 55% of --search-height
+    background-color: var(--bg-cancer-btn);
+    left: 0;
+  }
+}
+
+.glass-icon {
+  fill: var(--glass-fill);
+}
+
+// @media screen and (max-width: 876px) {
+//   .search {
+//     display: none;
+//   }
+// }
+
+.actions {
+  display: flex;
+  align-items: center;
+}
