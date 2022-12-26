@@ -19,7 +19,7 @@ import Tippy from '@tippyjs/react/headless';
 import style from './Header.module.scss';
 import images from '~/assets/images';
 import { Button, PopperWrapper, UserSugItem } from '~/components';
-
+import { Logo } from '../Icons';
 const cx = classNames.bind(style);
 
 const Header = ({ theme, setTheme }) => {
@@ -71,8 +71,7 @@ const Header = ({ theme, setTheme }) => {
   return (
     <div className={cx('wrapper')}>
       <div className={cx('inner')}>
-        {theme === 'light' ? <img src={images.tikokLogo_dark} /> : <img src={images.tikokLogo_light} />}
-
+        <Logo color={theme === 'light' ? 'dark' : 'white'} />
         <div className={cx('search')}>
           <input type="search" placeholder="Search accounts and videos" spellCheck={false} />
           <Tippy
