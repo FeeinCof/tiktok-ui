@@ -1,0 +1,27 @@
+[data-theme='light'] {
+  --bg-popper: white;
+}
+[data-theme='dark'] {
+  --bg-popper: rgb(18, 18, 18);
+}
+
+.popper-wrapper {
+  width: 100%;
+  max-height: min((100vh - 96px) - 60px, 734px);
+  min-height: 100px;
+  border-radius: 8px;
+  padding: 8px 0;
+  background-color: var(--bg-popper);
+  box-shadow: rgb(0 0 0 / 12%) 0px 2px 12px;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #fff;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: rgba(22, 24, 35, 0.06);
+  }
+}

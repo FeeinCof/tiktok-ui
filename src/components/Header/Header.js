@@ -1,13 +1,42 @@
+import { useState } from 'react';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { icon } from '@fortawesome/fontawesome-svg-core';
+import { faArrowLeft, faChevronLeft, faKeyboard, faMoon, faPlus, faQuestion } from '@fortawesome/free-solid-svg-icons';
 import Switch from 'react-switch';
+import Tippy from '@tippyjs/react/headless';
 import style from './Header.module.scss';
 import images from '~/assets/images';
 import Button from '../Button/Button';
+import PopperWrapper from '../PopperWrapper/PopperWrapper';
 const cx = classNames.bind(style);
 
 const Header = ({ theme, setTheme }) => {
+  const itemsMemory = [
+    {
+      content: 'English',
+      icon: faChevronLeft,
+      props: [
+        {
+          code: 'en',
+          content: 'English',
+        },
+        {
+          code: 'vi',
+          content: 'Vietnamese',
+        },
+      ],
+    },
+    {
+      content: 'Feelback and help',
+      icon: faQuestion,
+    },
+    {
+      content: 'Keyboard shortcuts',
+      icon: faKeyboard,
+    },
+  ];
+  const [items, setItems] = useState(itemsMemory);
   return (
     <div className={cx('wrapper')}>
       <div className={cx('inner')}>
@@ -38,18 +67,65 @@ const Header = ({ theme, setTheme }) => {
           </Button>
           <div style={{ width: '16px' }}></div>
           <Button color={'danger'}>Log in</Button>
-          {/* <Switch
-            onColor="#0BE09B"
-            onChange={setTheme}
-            activeBoxShadow="0 0 0px 0px #fff"
-            uncheckedIcon={false}
-            checkedIcon={false}
-            checked={theme === 'dark' ? true : false}
-            width={44}
-            height={24}
-          /> */}
+
           <div style={{ width: '16px' }}></div>
-          {theme === 'light' ? <img src={images.ellipsisVertical_dark} /> : <img src={images.ellipsisVertical_light} />}
+          <Tippy
+            interactive
+            placement="bottom-end"
+            delay={[0, 500]}
+            render={(attr) => {
+              return (
+                <PopperWrapper>
+                  <div className={cx('actions-wrapper')} tabIndex="-1" {...attr}>
+                    {!items[0].icon && (
+                      <div onClick={() => setItems(itemsMemory)} className={cx('actions-item')}>
+                        <FontAwesomeIcon icon={faChevronLeft} />
+                        <span>Languages</span>
+                      </div>
+                    )}
+                    {items.map((item, index) => {
+                      let result;
+                      item.props
+                        ? (result = (
+                            <div onClick={() => setItems(item.props)} key={index} className={cx('actions-item')}>
+                              {item.icon && <FontAwesomeIcon icon={item.icon} />}
+                              <span>{item.content}</span>
+                            </div>
+                          ))
+                        : (result = (
+                            <div key={index} className={cx('actions-item')}>
+                              {item.icon && <FontAwesomeIcon icon={item.icon} />}
+                              <span>{item.content}</span>
+                            </div>
+                          ));
+                      return result;
+                    })}
+                    <div className={cx('actions-item')}>
+                      <FontAwesomeIcon icon={faMoon} />
+                      <span>Dark mode</span>
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                      <Switch
+                        onColor="#0BE09B"
+                        onChange={setTheme}
+                        activeBoxShadow="0 0 0px 0px #fff"
+                        uncheckedIcon={false}
+                        checkedIcon={false}
+                        checked={theme === 'dark' ? true : false}
+                        width={44}
+                        height={24}
+                      />
+                    </div>
+                  </div>
+                </PopperWrapper>
+              );
+            }}
+          >
+            {theme === 'light' ? (
+              <img src={images.ellipsisVertical_dark} />
+            ) : (
+              <img src={images.ellipsisVertical_light} />
+            )}
+          </Tippy>
         </div>
       </div>
     </div>

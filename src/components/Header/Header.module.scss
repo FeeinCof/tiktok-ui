@@ -5,6 +5,8 @@
   --cancer-icon-src: url('../../assets/images/xmark@light.svg');
   --glass-fill: rgba(22, 24, 35, 0.341);
   --glass-fill-lighter: rgba(22, 24, 35, 0.75);
+  --actions-bg-hover: rgba(22, 24, 35, 0.03);
+  --box-shadow: 0px 1px 1px rgb(0 0 0 / 12%);
 }
 
 [data-theme='dark'] {
@@ -14,14 +16,18 @@
   --cancer-icon-src: url('../../assets/images/xmark@dark.svg');
   --glass-fill: rgba(255, 255, 255, 0.341);
   --glass-fill-lighter: rgba(255, 255, 255, 0.75);
+  --actions-bg-hover: rgba(255, 255, 255, 0.04);
+  --box-shadow: rgb(255 255 255 / 12%) 0px 1px 1px;
 }
 
 .wrapper {
+  z-index: 1010;
   width: 100%;
   display: flex;
   justify-content: center;
   position: fixed;
   background-color: var(--bg-primary);
+  box-shadow: var(--box-shadow);
 }
 
 .inner {
@@ -73,6 +79,12 @@
   }
 }
 
+@media screen and (max-width: 843px) {
+  .search {
+    display: none;
+  }
+}
+
 .search-btn {
   cursor: pointer;
   position: relative;
@@ -113,4 +125,33 @@
 .actions {
   display: flex;
   align-items: center;
+}
+
+.actions-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.actions-item {
+  cursor: pointer;
+  width: 100%;
+  min-width: 223px;
+  min-height: 42px;
+  padding: 10px 8px 10px 16px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: var(--text-primary);
+  svg {
+    width: 20px !important;
+    margin-right: 8px;
+  }
+  span {
+    font-weight: bold;
+  }
+  &:hover {
+    background-color: var(--actions-bg-hover);
+  }
 }
