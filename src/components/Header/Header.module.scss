@@ -85,6 +85,16 @@
   }
 }
 
+.search-result {
+  color: var(--text-primary);
+  .search-result-title {
+    padding: 5px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--text-gray);
+  }
+}
+
 .search-btn {
   cursor: pointer;
   position: relative;
@@ -108,6 +118,7 @@
     width: 0.5px;
     height: calc(46px * 55 / 100); // get 55% of --search-height
     background-color: var(--bg-cancer-btn);
+    box-sizing: border-box;
     left: 0;
   }
 }
@@ -116,42 +127,51 @@
   fill: var(--glass-fill);
 }
 
-// @media screen and (max-width: 876px) {
-//   .search {
-//     display: none;
-//   }
-// }
+@media screen and (max-width: 876px) {
+  .search {
+    display: none;
+  }
+}
 
 .actions {
   display: flex;
   align-items: center;
-}
-
-.actions-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-}
-
-.actions-item {
-  cursor: pointer;
-  width: 100%;
-  min-width: 223px;
-  min-height: 42px;
-  padding: 10px 8px 10px 16px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  color: var(--text-primary);
-  svg {
-    width: 20px !important;
-    margin-right: 8px;
+  img {
+    cursor: pointer;
   }
-  span {
-    font-weight: bold;
+  .profile-image {
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-size: 100%;
+    background-repeat: no-repeat;
   }
-  &:hover {
-    background-color: var(--actions-bg-hover);
+  .actions-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  .actions-item {
+    cursor: pointer;
+    width: 100%;
+    min-width: 223px;
+    min-height: 42px;
+    padding: 10px 8px 10px 16px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: var(--text-primary);
+    svg {
+      width: 20px !important;
+      margin-right: 8px;
+    }
+    span {
+      font-weight: bold;
+    }
+    &:hover {
+      background-color: var(--actions-bg-hover);
+    }
   }
 }

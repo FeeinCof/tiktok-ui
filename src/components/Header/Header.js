@@ -1,18 +1,31 @@
 import { useState } from 'react';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { icon } from '@fortawesome/fontawesome-svg-core';
-import { faArrowLeft, faChevronLeft, faKeyboard, faMoon, faPlus, faQuestion } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowLeft,
+  faArrowRightFromBracket,
+  faChevronLeft,
+  faGear,
+  faKeyboard,
+  faL,
+  faMoon,
+  faPlus,
+  faQuestion,
+  faVideo,
+} from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
 import Switch from 'react-switch';
 import Tippy from '@tippyjs/react/headless';
 import style from './Header.module.scss';
 import images from '~/assets/images';
-import Button from '../Button/Button';
-import PopperWrapper from '../PopperWrapper/PopperWrapper';
+import { Button, PopperWrapper, UserSugItem } from '~/components';
+
 const cx = classNames.bind(style);
 
 const Header = ({ theme, setTheme }) => {
-  const itemsMemory = [
+  const logined = true;
+  var itemsMemory = [];
+  const itemsGuest = [
     {
       content: 'English',
       icon: faChevronLeft,
@@ -36,29 +49,63 @@ const Header = ({ theme, setTheme }) => {
       icon: faKeyboard,
     },
   ];
-  const [items, setItems] = useState(itemsMemory);
+
+  const itemsProfile = [
+    {
+      content: 'View profile',
+      icon: faUser,
+    },
+    {
+      content: 'LIVE studio',
+      icon: faVideo,
+    },
+    {
+      content: 'Setting',
+      icon: faGear,
+    },
+    ...itemsGuest,
+  ];
+  logined ? (itemsMemory = [...itemsProfile]) : (itemsMemory = [...itemsGuest]);
+  const [searchResult, setSearchResult] = useState([]);
+  const [items, setItems] = useState(logined ? itemsProfile : itemsMemory);
   return (
     <div className={cx('wrapper')}>
       <div className={cx('inner')}>
         {theme === 'light' ? <img src={images.tikokLogo_dark} /> : <img src={images.tikokLogo_light} />}
+
         <div className={cx('search')}>
           <input type="search" placeholder="Search accounts and videos" spellCheck={false} />
-          <button className={cx('search-btn')}>
-            <svg
-              width="24"
-              data-e2e=""
-              height="24"
-              viewBox="0 0 48 48"
-              className={cx('glass-icon')}
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M22 10C15.3726 10 10 15.3726 10 22C10 28.6274 15.3726 34 22 34C28.6274 34 34 28.6274 34 22C34 15.3726 28.6274 10 22 10ZM6 22C6 13.1634 13.1634 6 22 6C30.8366 6 38 13.1634 38 22C38 25.6974 36.7458 29.1019 34.6397 31.8113L43.3809 40.5565C43.7712 40.947 43.7712 41.5801 43.3807 41.9705L41.9665 43.3847C41.5759 43.7753 40.9426 43.7752 40.5521 43.3846L31.8113 34.6397C29.1019 36.7458 25.6974 38 22 38C13.1634 38 6 30.8366 6 22Z"
-              ></path>
-            </svg>
-          </button>
+          <Tippy
+            offset={[0, 5]}
+            interactive
+            placement="bottom-end"
+            visible={searchResult.length > 1}
+            render={(attr) => (
+              <PopperWrapper>
+                <div className={cx('search-result')} tabIndex="-1" {...attr}>
+                  <span className={cx('search-result-title')}>Accounts</span>
+                  <UserSugItem />
+                </div>
+              </PopperWrapper>
+            )}
+          >
+            <button className={cx('search-btn')}>
+              <svg
+                width="24"
+                data-e2e=""
+                height="24"
+                viewBox="0 0 48 48"
+                className={cx('glass-icon')}
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M22 10C15.3726 10 10 15.3726 10 22C10 28.6274 15.3726 34 22 34C28.6274 34 34 28.6274 34 22C34 15.3726 28.6274 10 22 10ZM6 22C6 13.1634 13.1634 6 22 6C30.8366 6 38 13.1634 38 22C38 25.6974 36.7458 29.1019 34.6397 31.8113L43.3809 40.5565C43.7712 40.947 43.7712 41.5801 43.3807 41.9705L41.9665 43.3847C41.5759 43.7753 40.9426 43.7752 40.5521 43.3846L31.8113 34.6397C29.1019 36.7458 25.6974 38 22 38C13.1634 38 6 30.8366 6 22Z"
+                ></path>
+              </svg>
+            </button>
+          </Tippy>
         </div>
         <div className={cx('actions')}>
           <Button color={theme}>
@@ -66,20 +113,20 @@ const Header = ({ theme, setTheme }) => {
             &nbsp;&nbsp;Upload
           </Button>
           <div style={{ width: '16px' }}></div>
-          <Button color={'danger'}>Log in</Button>
-
+          {!logined && <Button color={'danger'}>Log in</Button>}
           <div style={{ width: '16px' }}></div>
           <Tippy
             interactive
             placement="bottom-end"
             delay={[0, 500]}
+            onHidden={() => setItems(itemsMemory)}
             render={(attr) => {
               return (
                 <PopperWrapper>
                   <div className={cx('actions-wrapper')} tabIndex="-1" {...attr}>
                     {!items[0].icon && (
                       <div onClick={() => setItems(itemsMemory)} className={cx('actions-item')}>
-                        <FontAwesomeIcon icon={faChevronLeft} />
+                        <FontAwesomeIcon icon={faArrowLeft} />
                         <span>Languages</span>
                       </div>
                     )}
@@ -115,12 +162,26 @@ const Header = ({ theme, setTheme }) => {
                         height={24}
                       />
                     </div>
+                    {logined && (
+                      <div className={cx('actions-item', 'br-top')}>
+                        <FontAwesomeIcon icon={faArrowRightFromBracket} />
+                        <span>Log out</span>
+                      </div>
+                    )}
                   </div>
                 </PopperWrapper>
               );
             }}
           >
-            {theme === 'light' ? (
+            {logined ? (
+              <div
+                className={cx('profile-image')}
+                style={{
+                  backgroundImage:
+                    'url(https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/e64ca5e289c6da1d430bdcaca6653eb7~c5_720x720.jpeg?x-expires=1672232400&x-signature=X3T%2Fvx8pRDKfYuHc%2FpIlfOlImZw%3D)',
+                }}
+              ></div>
+            ) : theme === 'light' ? (
               <img src={images.ellipsisVertical_dark} />
             ) : (
               <img src={images.ellipsisVertical_light} />
