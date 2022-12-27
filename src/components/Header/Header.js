@@ -1,34 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
+import * as searchService from '~/services/searchService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faArrowLeft,
-  faArrowRightFromBracket,
-  faChevronLeft,
-  faGear,
-  faKeyboard,
-  faL,
-  faMoon,
-  faPlus,
-  faQuestion,
-  faVideo,
-} from '@fortawesome/free-solid-svg-icons';
-import { faUser } from '@fortawesome/free-regular-svg-icons';
+import { faArrowLeft, faChevronLeft, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Switch from 'react-switch';
 import Tippy from '@tippyjs/react/headless';
 import style from './Header.module.scss';
-import images from '~/assets/images';
 import { Button, PopperWrapper, UserSugItem } from '~/components';
-import { Logo } from '../Icons';
+import { Logo, User, Video, Gear, QuestionCircle, Keyboard, Moon, Logout, EllipsisVertical } from '../Icons';
+import { useDebounce } from '~/hooks';
+
 const cx = classNames.bind(style);
 
 const Header = ({ theme, setTheme }) => {
-  const logined = true;
+  const logined = false;
   var itemsMemory = [];
   const itemsGuest = [
     {
       content: 'English',
-      icon: faChevronLeft,
+      icon: <FontAwesomeIcon icon={faChevronLeft} />,
       props: [
         {
           code: 'en',
@@ -42,48 +32,73 @@ const Header = ({ theme, setTheme }) => {
     },
     {
       content: 'Feelback and help',
-      icon: faQuestion,
+      icon: <QuestionCircle />,
     },
     {
       content: 'Keyboard shortcuts',
-      icon: faKeyboard,
+      icon: <Keyboard />,
     },
   ];
 
   const itemsProfile = [
     {
       content: 'View profile',
-      icon: faUser,
+      icon: <User />,
     },
     {
       content: 'LIVE studio',
-      icon: faVideo,
+      icon: <Video />,
     },
     {
       content: 'Setting',
-      icon: faGear,
+      icon: <Gear />,
     },
     ...itemsGuest,
   ];
   logined ? (itemsMemory = [...itemsProfile]) : (itemsMemory = [...itemsGuest]);
   const [searchResult, setSearchResult] = useState([]);
   const [items, setItems] = useState(logined ? itemsProfile : itemsMemory);
+  const [searchValue, setSearchValue] = useState('');
+
+  const debounced = useDebounce(searchValue, 500);
+  useEffect(() => {
+    if (!debounced.trim()) {
+      setSearchResult([]);
+      return;
+    }
+    const fetchApi = async () => {
+      const result = await searchService.search(debounced);
+      setSearchResult(result);
+    };
+    fetchApi();
+  }, [debounced]);
+
   return (
     <div className={cx('wrapper')}>
       <div className={cx('inner')}>
         <Logo color={theme === 'light' ? 'dark' : 'white'} />
         <div className={cx('search')}>
-          <input type="search" placeholder="Search accounts and videos" spellCheck={false} />
+          <input
+            onChange={(event) => {
+              setSearchValue(event.target.value);
+            }}
+            value={searchValue}
+            type="search"
+            placeholder="Search accounts and videos"
+            spellCheck={false}
+          />
           <Tippy
             offset={[0, 5]}
             interactive
             placement="bottom-end"
-            visible={searchResult.length > 1}
+            visible={searchResult.length > 0}
             render={(attr) => (
               <PopperWrapper>
                 <div className={cx('search-result')} tabIndex="-1" {...attr}>
                   <span className={cx('search-result-title')}>Accounts</span>
-                  <UserSugItem />
+                  {searchResult.map((user) => (
+                    <UserSugItem key={user.id} {...user} />
+                  ))}
                 </div>
               </PopperWrapper>
             )}
@@ -134,20 +149,20 @@ const Header = ({ theme, setTheme }) => {
                       item.props
                         ? (result = (
                             <div onClick={() => setItems(item.props)} key={index} className={cx('actions-item')}>
-                              {item.icon && <FontAwesomeIcon icon={item.icon} />}
+                              {item.icon}
                               <span>{item.content}</span>
                             </div>
                           ))
                         : (result = (
                             <div key={index} className={cx('actions-item')}>
-                              {item.icon && <FontAwesomeIcon icon={item.icon} />}
+                              {item.icon}
                               <span>{item.content}</span>
                             </div>
                           ));
                       return result;
                     })}
                     <div className={cx('actions-item')}>
-                      <FontAwesomeIcon icon={faMoon} />
+                      <Moon />
                       <span>Dark mode</span>
                       &nbsp;&nbsp;&nbsp;&nbsp;
                       <Switch
@@ -163,7 +178,7 @@ const Header = ({ theme, setTheme }) => {
                     </div>
                     {logined && (
                       <div className={cx('actions-item', 'br-top')}>
-                        <FontAwesomeIcon icon={faArrowRightFromBracket} />
+                        <Logout />
                         <span>Log out</span>
                       </div>
                     )}
@@ -180,10 +195,8 @@ const Header = ({ theme, setTheme }) => {
                     'url(https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/e64ca5e289c6da1d430bdcaca6653eb7~c5_720x720.jpeg?x-expires=1672232400&x-signature=X3T%2Fvx8pRDKfYuHc%2FpIlfOlImZw%3D)',
                 }}
               ></div>
-            ) : theme === 'light' ? (
-              <img src={images.ellipsisVertical_dark} />
             ) : (
-              <img src={images.ellipsisVertical_light} />
+              <EllipsisVertical />
             )}
           </Tippy>
         </div>

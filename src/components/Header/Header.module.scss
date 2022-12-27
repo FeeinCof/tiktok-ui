@@ -136,8 +136,9 @@
 .actions {
   display: flex;
   align-items: center;
-  img {
+  svg {
     cursor: pointer;
+    fill: var(--text-primary);
   }
   .profile-image {
     cursor: pointer;
@@ -166,6 +167,7 @@
     svg {
       width: 20px !important;
       margin-right: 8px;
+      fill: var(--text-primary) !important;
     }
     span {
       font-weight: bold;

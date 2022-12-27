@@ -1,1 +1,10 @@
 export { default as Logo } from './Logo';
+export { default as User } from './User';
+export { default as Video } from './Video';
+export { default as Gear } from './Gear';
+export { default as ASquare } from './ASquare';
+export { default as QuestionCircle } from './QuestionCircle';
+export { default as Keyboard } from './Keyboard';
+export { default as Moon } from './Moon';
+export { default as Logout } from './Logout';
+export { default as EllipsisVertical } from './EllipsisVertical';
