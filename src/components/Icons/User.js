@@ -1,6 +1,6 @@
-const User = ({ color }) => {
+const User = () => {
   return (
-    <svg width="1.5em" height="1.5em" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+    <svg width="1.5em" fill="currentColor" height="1.5em" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
       <path
         fillRule="evenodd"
         clipRule="evenodd"

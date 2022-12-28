@@ -1,7 +1,9 @@
 .wrapper {
   width: 348px;
   height: calc(100vh - var(--header-height));
-  padding: 20px 0 26px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0 26px 8px;
   position: fixed;
   background-color: var(--bg-primary);
 }

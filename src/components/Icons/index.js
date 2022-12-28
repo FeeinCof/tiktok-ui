@@ -7,4 +7,8 @@ export { default as QuestionCircle } from './QuestionCircle';
 export { default as Keyboard } from './Keyboard';
 export { default as Moon } from './Moon';
 export { default as Logout } from './Logout';
+export { default as Home } from './Home';
+export { default as Glass } from './Glass';
+export { default as CancerButton } from './CancerButton';
+export { default as LoadingCirle } from './LoadingCircle';
 export { default as EllipsisVertical } from './EllipsisVertical';

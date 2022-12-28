@@ -1,6 +1,6 @@
-const QuestionCircle = ({ color }) => {
+const QuestionCircle = () => {
   return (
-    <svg width="1.5em" height="1.5em" viewBox="0 0 48 48" fill="black" xmlns="http://www.w3.org/2000/svg">
+    <svg width="1.5em" height="1.5em" viewBox="0 0 48 48" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
       <path
         fillRule="evenodd"
         clipRule="evenodd"

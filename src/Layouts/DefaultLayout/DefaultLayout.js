@@ -2,7 +2,6 @@ import { useState } from 'react';
 import classNames from 'classnames/bind';
 import style from './DefaultLayout.module.scss';
 import { Header, Sidebar } from '~/components';
-
 const cx = classNames.bind(style);
 
 const DefaultLayout = ({ children }) => {

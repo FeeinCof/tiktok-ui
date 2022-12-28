@@ -1,0 +1,28 @@
+[data-theme='light'] {
+  --menu-item-bg-hover: rgba(22, 24, 35, 0.03);
+}
+
+[data-theme='dark'] {
+  --menu-item-bg-hover: rgba(255, 255, 255, 0.04);
+}
+.menu-item {
+  width: 100%;
+  min-height: 48px;
+  padding: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  &:hover {
+    background-color: var(--menu-item-bg-hover);
+  }
+}
+
+.menu-title {
+  padding-top: 4px;
+  padding-left: 6px;
+}
+
+.active {
+  color: var(--tiktok-pink) !important;
+}

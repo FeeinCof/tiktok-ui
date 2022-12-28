@@ -1,9 +1,10 @@
+import routesConfig from '~/config/routes';
 import { DefaultLayout } from '~/Layouts';
 import Home from '~/Pages/Home';
 
 const publishRoutes = [
   {
-    path: '/',
+    path: routesConfig.home,
     component: Home,
     layout: DefaultLayout,
   },
